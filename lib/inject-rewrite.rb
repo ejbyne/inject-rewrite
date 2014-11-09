@@ -19,16 +19,17 @@ class Array
       array.shift
     end
     n = array[0]
-    recursion_proc = Proc.new do #|array, sum, n|
+    recursion_proc = Proc.new do |array, sum, n|
       sum = block.call(sum, n)
       array.shift
+      n = array[0]
       if array.length == 0
         return sum
       else
-        recursion_proc.call #(array, sum, n)
+        recursion_proc.call(array, sum, n)
       end
     end
-    recursion_proc.call #(array, sum, n)
+    recursion_proc.call(array, sum, n)
   end
 
 end
