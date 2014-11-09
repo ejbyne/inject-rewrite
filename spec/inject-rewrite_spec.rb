@@ -17,5 +17,10 @@ describe Array do
     expect(array.inject_rewrite { |sum, n| sum * n }).to eq(120)
   end
 
+  it "can accept a starting number as an argument" do
+    array = [1, 2, 3, 4, 5]
+    expect(array.inject_rewrite(5) { |sum, n| sum + n }).to eq(20)
+  end
+
 
 end
