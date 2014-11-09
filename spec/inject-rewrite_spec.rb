@@ -22,5 +22,9 @@ describe Array do
     expect(array.inject_rewrite(5) { |sum, n| sum + n }).to eq(20)
   end
 
+  it "works with strings" do
+    array = ["Ed", "Sini", "Henry"]
+    expect(array.inject_rewrite { |sum, n| sum + n }).to eq("EdSiniHenry")
+  end
 
 end

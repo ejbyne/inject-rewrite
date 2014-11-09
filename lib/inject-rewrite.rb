@@ -1,9 +1,6 @@
 class Array
 
 def inject_rewrite(sum = nil, &block)
-  # sum = self[0]
-  # array = self
-  # array.shift if sum == self[0]
   array = self
   if sum == nil
     sum = array[0]
