@@ -1,8 +1,10 @@
 class Array
 
 def inject_rewrite(&block)
-  sum = 0
-  self.each do |n|
+  sum = self[0]
+  modified_array = self
+  modified_array.shift
+  modified_array.each do |n|
     sum = block.call(sum, n)
   end
   return sum
