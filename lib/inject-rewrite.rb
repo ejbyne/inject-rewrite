@@ -21,17 +21,13 @@ class Array
   def symbol_iteration_method(array, first_option, second_option)
     symbol_proc = create_symbol_proc(first_option, second_option)
     sum = select_symbol_initial_item(array, first_option, second_option)
-    array.each do |n|
-      sum = symbol_proc.call(sum, n)
-    end
+    array.each { |n| sum = symbol_proc.call(sum, n) }
     return sum
   end
 
   def block_iteration_method(array, first_option, &block)
     sum = select_block_initial_item(array, first_option)
-    array.each do |n|
-      sum = yield(sum, n)
-    end
+    array.each { |n| sum = yield(sum, n) }
     return sum
   end
 
