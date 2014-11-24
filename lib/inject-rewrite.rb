@@ -14,26 +14,30 @@ class Array
 
   def symbol_iteration_method(array, options)
     symbol_proc = options.select{ |option| option.is_a?(Symbol) }.first.to_proc
-    sum = select_symbol_initial_item(array, options)
+    sum = options[1].is_a?(Symbol) ? options[0] : array[0]
+    array.shift unless options[1].is_a?(Symbol)
     array.each { |n| sum = symbol_proc.call(sum, n) }
     return sum
   end
 
   def block_iteration_method(array, option, &block)
-    sum = select_block_initial_item(array, option)
+    sum = option == nil ? array[0] : option
+    array.shift if option == nil
     array.each { |n| sum = yield(sum, n) }
     return sum
   end
 
   def symbol_recursion_method(array, options)
     symbol_proc = options.select{ |option| option.is_a?(Symbol) }.first.to_proc
-    sum = select_symbol_initial_item(array, options)
+    sum = options[1].is_a?(Symbol) ? options[0] : array[0]
+    array.shift unless options[1].is_a?(Symbol)
     n = array[0]
     call_recursion(array, sum, n, &symbol_proc)
   end
 
   def block_recursion_method(array, option, &block)
-    sum = select_block_initial_item(array, option)
+    sum = option == nil ? array[0] : option
+    array.shift if option == nil
     n = array[0]
     call_recursion(array, sum, n, &block)
   end
@@ -43,23 +47,6 @@ class Array
     array.shift
     return sum if array.empty?
     call_recursion(array, sum, array[0], &block)
-  end
-
-  def select_symbol_initial_item(array, options)
-    return options[0] if options[1].is_a?(Symbol)
-    sum = array[0]
-    array.shift
-    return sum
-  end
-
-  def select_block_initial_item(array, option)
-    unless option == nil
-      sum = option
-    else
-      sum = array[0]
-      array.shift
-    end
-    return sum
   end
 
 end
