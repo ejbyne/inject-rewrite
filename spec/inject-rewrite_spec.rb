@@ -46,7 +46,7 @@ describe Array do
 
     it "can find the longest word in an array" do
       string_array = ["Ed", "Sini", "Henry"]
-      string_array.inject do |memo, word|
+      string_array.inject_rewrite_iteration do |memo, word|
         memo.length > word.length ? memo : word
       end
     end
@@ -75,6 +75,29 @@ describe Array do
     it "works with strings" do
       array = ["Ed", "Sini", "Henry"]
       expect(array.inject_rewrite_recursion { |sum, n| sum + n }).to eq("EdSiniHenry")
+    end
+
+        it "can aggregate elements when passed the symbol :+" do
+      expect(array.inject_rewrite_recursion(:+)).to eq(15)
+    end
+
+    it "can multiply elements when passed the symbol :*" do
+      expect(array.inject_rewrite_recursion(:*)).to eq(120)
+    end
+
+    it "can take a starting number and the symbol :+" do
+      expect(array.inject_rewrite_recursion(5, :+)).to eq(20)
+    end
+
+    it "can take a starting number and the symbol :*" do
+      expect(array.inject_rewrite_recursion(5, :*)).to eq(600)
+    end
+
+    it "can find the longest word in an array" do
+      string_array = ["Ed", "Sini", "Henry"]
+      string_array.inject_rewrite_recursion do |memo, word|
+        memo.length > word.length ? memo : word
+      end
     end
 
   end
