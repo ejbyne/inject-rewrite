@@ -29,6 +29,16 @@ describe Array do
       expect(array.inject_rewrite_iteration { |sum, n| sum + n }).to eq("EdSiniHenry")
     end
 
+    it "can aggregate elements when passed the symbol(:+)" do
+      array = [1, 2, 3, 4, 5]
+      expect(array.inject_rewrite_iteration(:+)).to eq(15)
+    end
+
+    it "can multiply elements when passed the symbol(:*)" do
+      array = [1, 2, 3, 4, 5]
+      expect(array.inject_rewrite_iteration(:*)).to eq(120)
+    end
+
   end
 
   context 'recursion' do
