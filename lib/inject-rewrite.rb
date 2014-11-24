@@ -2,44 +2,25 @@ class Array
 
   def inject_rewrite_iteration(*options, &block)
     array = self.dup
-    return symbol_iteration_method(array, options)if options.any? { |option| option.is_a?(Symbol) }
-    block_iteration_method(array, options[0], &block)
+    options.map { |option| block = option.to_proc if option.is_a?(Symbol) }
+    sum = initial_sum(array, options)
+    array.shift if options[0].is_a?(Symbol) || options.empty?
+    array.each { |n| sum = block.call(sum, n) }
+    return sum
   end
 
   def inject_rewrite_recursion(*options, &block)
     array = self.dup
-    return symbol_recursion_method(array, options) if options.any? { |option| option.is_a?(Symbol) }
-    block_recursion_method(array, options[0], &block)
-  end
-
-  def symbol_iteration_method(array, options)
-    symbol_proc = options.select{ |option| option.is_a?(Symbol) }.first.to_proc
-    sum = options[1].is_a?(Symbol) ? options[0] : array[0]
-    array.shift unless options[1].is_a?(Symbol)
-    array.each { |n| sum = symbol_proc.call(sum, n) }
-    return sum
-  end
-
-  def block_iteration_method(array, option, &block)
-    sum = option == nil ? array[0] : option
-    array.shift if option == nil
-    array.each { |n| sum = yield(sum, n) }
-    return sum
-  end
-
-  def symbol_recursion_method(array, options)
-    symbol_proc = options.select{ |option| option.is_a?(Symbol) }.first.to_proc
-    sum = options[1].is_a?(Symbol) ? options[0] : array[0]
-    array.shift unless options[1].is_a?(Symbol)
-    n = array[0]
-    call_recursion(array, sum, n, &symbol_proc)
-  end
-
-  def block_recursion_method(array, option, &block)
-    sum = option == nil ? array[0] : option
-    array.shift if option == nil
+    options.map { |option| block = option.to_proc if option.is_a?(Symbol) }
+    sum = initial_sum(array, options)
+    array.shift if options[0].is_a?(Symbol) || options.empty?
     n = array[0]
     call_recursion(array, sum, n, &block)
+  end
+
+  def initial_sum(array, options)
+    return array[0] if options[0].is_a?(Symbol) || options.empty?
+    return options[0] if !options[0].is_a?(Symbol) && !options[0].nil?
   end
 
   def call_recursion(array, sum, n, &block)
