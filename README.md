@@ -1,7 +1,6 @@
-Inject Method
-=======================
+# Inject Method
 
-Synopsis
+## Summary
 
 I have rewritten Ruby's inject method (using both iterative and recursive methods) as part of my Week 2 challenge at Makers Academy
 
@@ -26,14 +25,6 @@ def symbol_to_block(options)
   options.select{ |option| option.is_a?(Symbol) }.first.to_proc 
 end
 ~~~
-
-## Collaborators
-
-- None
-
-## Still to complete/refactor
-
-- Completed
 
 ## Takeaway
 
