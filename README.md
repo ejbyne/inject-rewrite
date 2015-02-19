@@ -35,7 +35,7 @@ $ cd inject-rewrite
 $ rspec
 ```
 
-## Favourite Code Snippet
+## Favourite code snippet
 
 This was my way of converting a symbol passed as an argument to the inject method into a block:
 ```ruby
